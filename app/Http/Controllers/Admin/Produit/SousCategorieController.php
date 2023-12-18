@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Produit;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SousCategorie\StoreSousCategorieRequest;
 use App\Http\Requests\SousCategorie\UpdateSousCategorieRequest;
+use App\Models\Categorie;
 use App\Models\SousCategorie;
 use Illuminate\Http\Request;
 
@@ -18,8 +19,9 @@ class SousCategorieController extends Controller
     public function index()
     {
         try {
-            $Sous_categories = SousCategorie::all();
-            return view('admin.components.sousCategorie.index', compact('Sous_categories'));
+            $sousCategoriesGroupedByCategorie = SousCategorie::with('categorie')->get()->groupBy('categorie_id');
+            $categories = Categorie::all();
+            return view('admin.components.sousCategorie.index', compact('sousCategoriesGroupedByCategorie', 'categories'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Une erreur s\'est produite. Veuillez réessayer.');
         }
@@ -34,7 +36,8 @@ class SousCategorieController extends Controller
     {
         try {
             $Sous_categories = SousCategorie::all();
-            return view('admin.components.sousCategorie.create', compact('Sous_categories'));
+            $categories = Categorie::all();
+            return view('admin.components.sousCategorie.create', compact('Sous_categories', 'categories'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Une erreur s\'est produite. Veuillez réessayer.' . $e);
         }
@@ -49,13 +52,14 @@ class SousCategorieController extends Controller
     public function store(StoreSousCategorieRequest $request)
     {
         try {
-            $Sous_categories = new SousCategorie();
-            $Sous_categories->libelle = $request->libelle;
-            $Sous_categories->categorie_id = $request->categorieId;
-            $Sous_categories->save();
+            $sous_categorie = new SousCategorie();
+            $sous_categorie->libelle = $request->libelle;
+            $sous_categorie->categorie_id = $request->categorieId;
+            $sous_categorie->save();
 
             return redirect('/sousCategories')->with('status', 'Sous categorie ajouté avec succès');
         } catch (\Exception $e) {
+            dd($e->getMessage()); // Affichez le message d'erreur
             return redirect()->back()->with('error', 'Une erreur s\'est produite. Veuillez réessayer.' . $e);
         }
     }

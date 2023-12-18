@@ -29,29 +29,32 @@
                                     Ajouter une sous-catégorie
                                 </h2>
                             </div>
-                            <div class="p-5">
-                                <div class="grid grid-cols-12 gap-5">
-                                    <div class="col-span-12 xl:col-span-8">
-                                        <div>
-                                            <label>Nom</label>
-                                            <input type="text" class="input w-full border bg-gray-100 cursor-not-allowed mt-2" placeholder="Input text" value="Leonardo DiCaprio">
-                                        </div>
-                                        <div class="mt-3">
-                                            <label>catégorie</label>
-                                            <div class="mt-2">
-                                                <select data-search="true" class="tail-select w-full">
-                                                    <option value="1">Admiralty</option>
-                                                    <option value="2">Aljunied</option>
-                                                    <option value="3">Ang Mo Kio</option>
-                                                    <option value="4">Bartley</option>
-                                                    <option value="5">Beauty World</option>
-                                                </select>
+                            <form action="{{ route('sousCategorie.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                                <div class="p-5">
+                                    <div class="grid grid-cols-12 gap-5">
+                                        <div class="col-span-12 xl:col-span-8">
+                                            <div>
+                                                <label>Nom</label>
+                                                <input name="libelle" type="text" class="input w-full border mt-2" placeholder="Veuillez entrer le nom du sous-catégorie ...">
+                                            </div>
+                                            <div class="mt-3">
+                                                <label>catégorie</label>
+                                                <div class="mt-2">
+                                                    <select name="categorieId" data-search="true" class="tail-select w-full">
+                                                        @foreach ($categories as $categorie)
+                                                            <option value="{{ $categorie->id }}">{{ $categorie->libelle }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-end mt-4">
+                                                <button type="submit" class="button bg-theme-1 text-white ml-auto">Enregistrer</button>
                                             </div>
                                         </div>
-                                        <button type="button" class="button w-20 bg-theme-1 text-white mt-3">Save</button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
