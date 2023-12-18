@@ -70,6 +70,12 @@
                                     <div class="side-menu__title"> Ajouter un mécanicien </div>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ url('mecaniciens-deleted') }}" class="side-menu">
+                                    <div class="side-menu__icon"> <i data-feather="list"></i> </div>
+                                    <div class="side-menu__title"> Liste des mécaniciens archivée </div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

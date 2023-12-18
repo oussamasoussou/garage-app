@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Mecanicien;
+namespace App\Http\Controllers\Admin\Mecanicien;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Mecanicien\StoreMecanicienRequest;
+use App\Http\Requests\Mecanicien\UpdateMecanicienRequest;
 use App\Models\Mecanicien;
 use Illuminate\Http\Request;
 use Image;
@@ -52,16 +54,9 @@ class MecanicienController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMecanicienRequest $request)
     {
         try {
-            $this->validate($request, [
-                'nom' => 'required',
-                'prenom' => 'required',
-                'identite' => 'required',
-                'telephone' => 'required',
-                'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif',
-            ]);
             $mecaniciens = new Mecanicien();
             $mecaniciens->nom = $request->nom;
             $mecaniciens->prenom = $request->prenom;
@@ -81,7 +76,6 @@ class MecanicienController extends Controller
 
             }    
             $mecaniciens->save();
-    
 
             return redirect('/mecaniciens')->with('status', 'Mecanicien ajouté avec succès');
         } catch (\Exception $e) {
@@ -112,17 +106,9 @@ class MecanicienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMecanicienRequest $request, $id)
     {
         try {
-            $this->validate($request, [
-                'nom' => 'required',
-                'prenom' => 'required',
-                'identite' => 'required',
-                'telephone' => 'required',
-                'image' => 'sometimes',
-            ]);
-
             $mecaniciens = Mecanicien::findOrFail($id);
             $mecaniciens->fill($request->only(['nom', 'prenom', 'identite', 'telephone']));
             $mecaniciens->save();
@@ -148,4 +134,33 @@ class MecanicienController extends Controller
             return redirect()->back()->with('error', 'Une erreur s\'est produite. Veuillez réessayer.'.$e);
         }
     }
+
+    public function getDeleted(Request $request)
+    {
+        try {
+            $mecaniciens = Mecanicien::withTrashed()->where('deleted_at', '!=', null)->get();
+            if ($request->has('keyword')) {
+                $keyword = '%' . $request->input('keyword') . '%';
+                $mecaniciens->where(function ($query) use ($keyword) {
+                    $query->where('nom', 'like', $keyword)
+                        ->orWhere('prenom', 'like', $keyword);
+                });
+            }
+            return view('admin.components.mecanicien.getDeleted', compact('mecaniciens'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Une erreur s\'est produite. Veuillez réessayer.'.$e);
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $mecanicien = Mecanicien::withTrashed()->findOrFail($id);
+            $mecanicien->restore();
+            return redirect('/mecaniciens')->with('status', 'Mecanicien a été restauré avec succès');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Une erreur s\'est produite. Veuillez réessayer.'.$e->getMessage());
+        }
+    }
+    
 }
