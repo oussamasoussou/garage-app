@@ -16,11 +16,6 @@
         <table class="table table-report -mt-2">
             <thead>
                 <tr>
-                    <!-- <th class="whitespace-no-wrap">Id</th>
-                    <th class="whitespace-no-wrap">Nom</th>
-                    <th class="whitespace-no-wrap">Téléphone</th>
-                    <th class="whitespace-no-wrap">Adresse</th>
-                    <th class="text-center whitespace-no-wrap">Actions</th> -->
                      <th class="whitespace-no-wrap">ID</th>
                     <th class="whitespace-no-wrap">NOM</th>
                     <th class="whitespace-no-wrap">TÉLÉPHONE</th>

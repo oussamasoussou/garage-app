@@ -40,19 +40,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            @foreach ($categories as $categorie )
                                                 <tr class="bg-gray-200 dark:bg-dark-1">
-                                                    <td class="border-b dark:border-dark-5">1</td>
-                                                    <td class="border-b dark:border-dark-5">Angelina</td>
+                                                    <td class="border-b dark:border-dark-5">{{ $categorie->id }}</td>
+                                                    <td class="border-b dark:border-dark-5">{{ $categorie->libelle }}</td>
                                                     <td class="table-report__action w-56">
                                                         <div class="flex justify-center items-center">
-                                                            <a class="flex items-center mr-3" style="color: #03660c;" href="#"> <i data-feather="check-square"
+                                                            <a class="flex items-center mr-3" style="color: #03660c;" href="{{ url('edit-categorie/'.$categorie->id) }}"> <i data-feather="check-square"
                                                                     class="w-4 h-4 mr-1"></i> <span style="color: #03660c;">Modifier</span>  </a>
-                                                            <a class="flex items-center text-theme-6" href="#" data-toggle="modal"
+                                                            <a class="flex items-center text-theme-6" href="{{ url('delete-categorie/'.$categorie->id) }}" data-toggle="modal"
                                                                 data-target="#delete-confirmation-modal"> <i data-feather="trash-2"
                                                                     class="w-4 h-4 mr-1"></i> Supprimer </a>
                                                         </div>
                                                     </td>
                                                 </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
