@@ -26,19 +26,22 @@
                                     Ajouter une catégorie
                                 </h2>
                             </div>
-                            <div class="p-5">
-                                <div class="grid grid-cols-12 gap-5">
-                                    <div class="col-span-12 xl:col-span-6">
-                                        <div class="mt-3">
-                                            <label>Name</label>
-                                            <input type="text" class="input w-full border mt-2" placeholder="Veuillez entrer le nom du catégorie ...">
+                            <form class="validate-form" action="{{ route('categorie.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                                <div class="p-5">
+                                    <div class="grid grid-cols-12 gap-5">
+                                        <div class="col-span-12 xl:col-span-6">
+                                            <div class="mt-3">
+                                                <label>Nom</label>
+                                                <input name="libelle" type="text" class="input w-full border mt-2" placeholder="Veuillez entrer le nom du catégorie ...">
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="flex justify-end mt-4">
+                                        <button type="submit" class="button bg-theme-1 text-white ml-auto">Enregistrer</button>
+                                    </div>
                                 </div>
-                                <div class="flex justify-end mt-4">
-                                    <button type="button" class="button w-20 bg-theme-1 text-white ml-auto">Save</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

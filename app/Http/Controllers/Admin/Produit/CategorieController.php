@@ -85,7 +85,9 @@ class CategorieController extends Controller
     {
         try {
             $categories = Categorie::findOrFail($id);
-            $categories->fill($request->only(['libelle']));
+            if ($request->has('libelle')){
+                $categories->libelle = $request->libelle;
+            }
             $categories->save();
             return redirect('/categories')->with('status', 'Categorie a été modifier avec succès');
         } catch (\Exception $e) {
