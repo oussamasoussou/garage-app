@@ -28,32 +28,37 @@
                                         <div class="col-span-12 xl:col-span-8">
                                             <div class="input-form">
                                                 <label class="flex flex-col sm:flex-row"> Nom
-                                                    <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Requis, au moins 3
-                                                        caractères</span>
+                                                @error('nom')
+                                                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">{{ $message }}</span>
+                                                    @enderror
                                                 </label>
                                                 <input type="text" name="nom" class="input w-full border mt-2"
                                                     placeholder="Veuillez entrer le nom du mecanicien." minlength="2" required>
                                             </div>
                                             <div class="input-form mt-3">
                                                 <label class="flex flex-col sm:flex-row"> Prénom
-                                                    <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Requis, au moins 3
-                                                        caractères</span>
+                                                @error('prenom')
+                                                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">{{ $message }}</span>
+                                                    @enderror
+                                                </label>
                                                 </label>
                                                 <input type="text" name="prenom" class="input w-full border mt-2"
                                                     placeholder="Veuillez entrer le prénom du mecanicien." minlength="2" required>
                                             </div>
                                             <div class="input-form mt-3">
                                                 <label class="flex flex-col sm:flex-row"> Téléphone
-                                                    <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Requis, uniquement des
-                                                        chiffres</span>
+                                                @error('telephone')
+                                                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">{{ $message }}</span>
+                                                    @enderror
                                                 </label>
                                                 <input type="number" name="telephone" class="input w-full border mt-2"
                                                     placeholder="Veuillez entrer le numéro de téléphone du mecanicien." required>
                                             </div>
                                             <div class="input-form mt-3">
                                                 <label class="flex flex-col sm:flex-row"> Identité
-                                                    <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Requis, uniquement des
-                                                        chiffres</span>
+                                                    @error('identite')
+                                                        <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">{{ $message }}</span>
+                                                    @enderror
                                                 </label>
                                                 <input type="number" name="identite" class="input w-full border mt-2"
                                                     placeholder="Veuillez entrer le numéro de identité du mecanicien." required>
